@@ -36,16 +36,13 @@ export class PostResolver {
   async createPost(
     @Arg('title') title: string,
     @Arg('body') body: string,
-    @Arg('authorId') authorId: number,
-    @Ctx() { req }: MyContext
+    @Arg('authorId') authorId: number
   ): Promise<PostTypePrisma | void> {
     try {
       const post = await prisma.post.create({
         data: { title, body, authorId: Number(authorId) },
       });
-      if (post) {
-        req.session.userId = post.id;
-      }
+
       return post;
     } catch (error) {
       console.log(error);
