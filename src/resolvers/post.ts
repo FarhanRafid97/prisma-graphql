@@ -1,8 +1,6 @@
-import { isAuth } from '../middleware/isAuth';
-import { MyContext, PostTypePrisma } from 'src/types';
+import { PostTypePrisma } from 'src/types';
 import {
   Arg,
-  Ctx,
   Field,
   Mutation,
   ObjectType,
@@ -10,6 +8,7 @@ import {
   UseMiddleware,
 } from 'type-graphql';
 import { prisma } from '../index';
+import { isAuth } from '../middleware/isAuth';
 
 declare module 'express-session' {
   interface SessionData {
