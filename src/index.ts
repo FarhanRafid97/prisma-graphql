@@ -32,7 +32,9 @@ async function main() {
   appolloServer.applyMiddleware({
     app,
   });
-  app.listen(4222, () => console.log('app listen to localhost:4000'));
+  app.listen(process.env.PORT, () =>
+    console.log('app listen to localhost:4000')
+  );
 }
 
 main()
