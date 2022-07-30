@@ -8,7 +8,6 @@ import {
   UseMiddleware,
 } from 'type-graphql';
 import { prisma } from '../index';
-import { isAuth } from '../middleware/isAuth';
 
 declare module 'express-session' {
   interface SessionData {
@@ -31,7 +30,6 @@ class PostType {
 Resolver();
 export class PostResolver {
   @Mutation(() => PostType)
-  @UseMiddleware(isAuth)
   async createPost(
     @Arg('title') title: string,
     @Arg('body') body: string,
