@@ -1,7 +1,5 @@
-import { CreateUserType, MyContext } from '../types';
 import {
   Arg,
-  Ctx,
   Field,
   Mutation,
   ObjectType,
@@ -9,12 +7,8 @@ import {
   Resolver,
 } from 'type-graphql';
 import { prisma } from '../index';
+import { CreateUserType } from '../types';
 
-declare module 'express-session' {
-  interface SessionData {
-    userId?: number | any;
-  }
-}
 @ObjectType()
 export class Post {
   @Field()
@@ -44,8 +38,7 @@ class UserType {
 Resolver();
 export class UserResolver {
   @Query(() => [UserType])
-  async allUser(@Ctx() { req }: MyContext) {
-    console.log(req.session.userId);
+  async allUser() {
     return await prisma.user.findMany({ include: { posts: true } });
   }
   @Mutation(() => UserType)
@@ -64,8 +57,7 @@ export class UserResolver {
   @Mutation(() => UserType)
   async loginUser(
     @Arg('email') email: string,
-    @Arg('password') password: string,
-    @Ctx() { req }: MyContext
+    @Arg('password') password: string
   ): Promise<CreateUserType | void | Object> {
     try {
       const user = await prisma.user.findFirstOrThrow({ where: { email } });
@@ -74,8 +66,6 @@ export class UserResolver {
       }
       const isValidPassword = user.password === password;
       if (!isValidPassword) return { msg: 'password tida adak' };
-
-      req.session.userId = user.id;
 
       return user;
     } catch (error) {

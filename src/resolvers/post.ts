@@ -2,12 +2,6 @@ import { PostTypePrisma } from 'src/types';
 import { Arg, Field, Mutation, ObjectType, Resolver } from 'type-graphql';
 import { prisma } from '../index';
 
-declare module 'express-session' {
-  interface SessionData {
-    userId?: number | any;
-  }
-}
-
 @ObjectType()
 class PostType {
   @Field()
