@@ -21,6 +21,7 @@ async function main() {
       validate: false,
     }),
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+    introspection: true,
 
     context: ({ req, res }): MyContext => ({
       req,
@@ -31,7 +32,9 @@ async function main() {
 
   appolloServer.applyMiddleware({
     app,
+    cors: false,
   });
+
   app.listen(process.env.PORT, () =>
     console.log('app listen to localhost:4000')
   );
