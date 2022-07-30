@@ -16,7 +16,7 @@ declare module 'express-session' {
   }
 }
 @ObjectType()
-class Post {
+export class Post {
   @Field()
   id: number;
   @Field()
@@ -51,14 +51,11 @@ export class UserResolver {
   @Mutation(() => UserType)
   async createUser(
     @Arg('email') email: string,
-    @Arg('password') password: string,
-    @Ctx() { req }: MyContext
+    @Arg('password') password: string
   ): Promise<CreateUserType | void> {
     try {
       const user = await prisma.user.create({ data: { email, password } });
-      if (user) {
-        req.session.userId = user.id;
-      }
+
       return user;
     } catch (error) {
       console.log(error);
@@ -82,7 +79,7 @@ export class UserResolver {
 
       return user;
     } catch (error) {
-      console.log(error);
+      return error.message;
     }
   }
 }
