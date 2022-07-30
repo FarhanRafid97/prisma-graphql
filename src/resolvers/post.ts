@@ -1,12 +1,5 @@
 import { PostTypePrisma } from 'src/types';
-import {
-  Arg,
-  Field,
-  Mutation,
-  ObjectType,
-  Resolver,
-  UseMiddleware,
-} from 'type-graphql';
+import { Arg, Field, Mutation, ObjectType, Resolver } from 'type-graphql';
 import { prisma } from '../index';
 
 declare module 'express-session' {
